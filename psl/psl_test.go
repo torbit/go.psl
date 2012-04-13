@@ -1,6 +1,7 @@
 package psl
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -89,46 +90,28 @@ func TestPublicSuffixData(t *testing.T) {
 	checkPublicSuffix("www.test.k12.ak.us", "test.k12.ak.us")
 }
 
-func TestRegisteredDomain(t *testing.T) {
-	if RegisteredDomain("www.google.com") != "google.com" {
-		t.Fail()
-	}
-	if RegisteredDomain("www.google.co.uk") != "google.co.uk" {
-		t.Fail()
-	}
-	if RegisteredDomain("something.unknown") != "" {
-		t.Fail()
-	}
-	if RegisteredDomain("co.uk") != "" {
-		t.Fail()
-	}
-}
-
-func TestPublicSuffix(t *testing.T) {
-	if PublicSuffix("www.google.com") != "com" {
-		t.Fail()
-	}
-	if PublicSuffix("www.google.co.uk") != "co.uk" {
-		t.Fail()
-	}
-	if PublicSuffix("something.unknown") != "" {
-		t.Fail()
-	}
-	if PublicSuffix("co.uk") != "co.uk" {
-		t.Fail()
-	}
-}
-
 func ExampleRegisteredDomain() {
-	RegisteredDomain("www.google.com")    // "google.com"
-	RegisteredDomain("www.google.co.uk")  // "google.co.uk"
-	RegisteredDomain("something.unknown") // ""
-	RegisteredDomain("co.uk")             // ""
+	fmt.Println(RegisteredDomain("www.google.com"))    // "google.com"
+	fmt.Println(RegisteredDomain("www.google.co.uk"))  // "google.co.uk"
+	fmt.Println(RegisteredDomain("something.unknown")) // ""
+	fmt.Println(RegisteredDomain("co.uk"))             // ""
+
+	// Output:
+	// google.com
+	// google.co.uk
+	// 
+	//
 }
 
 func ExamplePublicSuffix() {
-	PublicSuffix("www.google.com")    // "com"
-	PublicSuffix("www.google.co.uk")  // "co.uk"
-	PublicSuffix("something.unknown") // ""
-	PublicSuffix("co.uk")             // "co.uk"
+	fmt.Println(PublicSuffix("www.google.com"))	// "com"
+	fmt.Println(PublicSuffix("www.google.co.uk"))	// "co.uk"
+	fmt.Println(PublicSuffix("something.unknown"))	// ""
+	fmt.Println(PublicSuffix("co.uk"))		// "co.uk
+
+	// Output:
+	// com
+	// co.uk
+	//
+	// co.uk
 }
