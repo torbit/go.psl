@@ -109,9 +109,7 @@ func parse(reader io.Reader) (*rule, error) {
 
 func extractLicense(data []byte) []byte {
 
-	var licStart = regexp.MustCompile(".*BEGIN LICENSE BLOCK.*")
-	var licEnd = regexp.MustCompile(".*END LICENSE BLOCK.*")
-	var inBlock = false
+	var licEnd = regexp.MustCompile(".*===BEGIN ICANN DOMAINS===.*")
 	var lines [][]byte
 
 	r := bufio.NewReader(bytes.NewReader(data))
@@ -127,19 +125,11 @@ func extractLicense(data []byte) []byte {
 			panic("FIXME: handle long lines")
 		}
 
-		if inBlock {
-			lines = append(lines, line)
-			if licEnd.Match(line) {
-				inBlock = false
-				break
-			}
-		} else {
-			if licStart.Match(line) {
-				inBlock = true
-				lines = append(lines, line)
-			}
-
+		if licEnd.Match(line) {
+			break
 		}
+
+		lines = append(lines, line)
 	}
 
 	return bytes.Join(lines, []byte("\n"))
