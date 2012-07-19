@@ -64,9 +64,14 @@ func TestPublicSuffixData(t *testing.T) {
 	checkPublicSuffix("test.ac.jp", "test.ac.jp")
 	checkPublicSuffix("www.test.ac.jp", "test.ac.jp")
 	checkPublicSuffix("kyoto.jp", "")
-	checkPublicSuffix("c.kyoto.jp", "")
-	checkPublicSuffix("b.c.kyoto.jp", "b.c.kyoto.jp")
-	checkPublicSuffix("a.b.c.kyoto.jp", "b.c.kyoto.jp")
+
+	checkPublicSuffix("c.kyoto.jp", "c.kyoto.jp")           // Prefecture Type.
+	checkPublicSuffix("b.c.kyoto.jp", "c.kyoto.jp")         // Prefecture Type.
+	checkPublicSuffix("a.b.c.kyoto.jp", "c.kyoto.jp")       // Prefecture Type.
+	checkPublicSuffix("uji.kyoto.jp", "")                   // Geographic Type.
+	checkPublicSuffix("b.uji.kyoto.jp", "b.uji.kyoto.jp")   // Geographic Type.
+	checkPublicSuffix("a.b.uji.kyoto.jp", "b.uji.kyoto.jp") // Geographic Type.
+
 	checkPublicSuffix("pref.kyoto.jp", "pref.kyoto.jp")     // Exception rule.
 	checkPublicSuffix("www.pref.kyoto.jp", "pref.kyoto.jp") // Exception rule.
 	checkPublicSuffix("city.kyoto.jp", "city.kyoto.jp")     // Exception rule.
@@ -104,10 +109,10 @@ func ExampleRegisteredDomain() {
 }
 
 func ExamplePublicSuffix() {
-	fmt.Println(PublicSuffix("www.google.com"))	// "com"
-	fmt.Println(PublicSuffix("www.google.co.uk"))	// "co.uk"
-	fmt.Println(PublicSuffix("something.unknown"))	// ""
-	fmt.Println(PublicSuffix("co.uk"))		// "co.uk
+	fmt.Println(PublicSuffix("www.google.com"))    // "com"
+	fmt.Println(PublicSuffix("www.google.co.uk"))  // "co.uk"
+	fmt.Println(PublicSuffix("something.unknown")) // ""
+	fmt.Println(PublicSuffix("co.uk"))             // "co.uk
 
 	// Output:
 	// com
